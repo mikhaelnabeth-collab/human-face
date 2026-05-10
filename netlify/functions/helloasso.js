@@ -25,7 +25,7 @@ exports.handler = async () => {
     const { access_token } = await tokenRes.json();
 
     const statsRes = await fetch(
-      `https://api.helloasso.com/v5/organizations/${ORG_SLUG}/forms/Donation/${FORM_SLUG}/statistics`,
+      `https://api.helloasso.com/v5/organizations/${ORG_SLUG}/Paymentform/Donation/${FORM_SLUG}/statistics`,
       { headers: { Authorization: `Bearer ${access_token}` } }
     );
 
