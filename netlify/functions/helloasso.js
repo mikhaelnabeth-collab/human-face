@@ -1,10 +1,10 @@
 exports.handler = async () => {
-  const CLIENT_ID     = process.env.HELLOASSO_CLIENT_ID;
+  const CLIENT_ID   = process.env.HELLOASSO_CLIENT_ID;
   const CLIENT_SECRET = process.env.HELLOASSO_CLIENT_SECRET;
-  const ORG_SLUG      = process.env.HELLOASSO_ORG_SLUG;
-  const FORM_SLUG     = process.env.HELLOASSO_FORM_SLUG;
-  const GOAL          = 350000;
-  const BASE_AMOUNT   = 39000; // montant de base hors HelloAsso
+  const ORG_SLUG    = process.env.HELLOASSO_ORG_SLUG;
+  const FORM_SLUG   = process.env.HELLOASSO_FORM_SLUG;
+  const GOAL        = 350000;
+  const BASE_AMOUNT = 39000;
 
   try {
     const tokenRes = await fetch("https://api.helloasso.com/oauth2/token", {
@@ -26,9 +26,19 @@ exports.handler = async () => {
     const data = await res.json();
 
     let onlineCents = 0;
+    const donors = [];
+
     for (const payment of data.data || []) {
       if (payment.state === "Authorized" || payment.state === "Processed") {
         onlineCents += payment.amount || 0;
+        const name = payment.payer?.isAnonymous
+          ? "Donateur anonyme"
+          : `${payment.payer?.firstName || ""} ${payment.payer?.lastName || ""}`.trim();
+        donors.push({
+          name,
+          amount: Math.round((payment.amount || 0) / 100),
+          date: payment.date,
+        });
       }
     }
 
@@ -42,7 +52,7 @@ exports.handler = async () => {
         "Cache-Control": "public, max-age=3600",
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify({ amount, goal: GOAL, pct }),
+      body: JSON.stringify({ amount, goal: GOAL, pct, donors }),
     };
 
   } catch (e) {
