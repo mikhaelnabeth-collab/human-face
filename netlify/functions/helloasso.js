@@ -31,9 +31,11 @@ exports.handler = async () => {
     for (const payment of data.data || []) {
       if (payment.state === "Authorized" || payment.state === "Processed") {
         onlineCents += payment.amount || 0;
-        const name = payment.payer?.isAnonymous
-          ? "Donateur anonyme"
-          : `${payment.payer?.firstName || ""} ${payment.payer?.lastName || ""}`.trim();
+const firstName = payment.payer?.firstName || "";
+const lastInitial = payment.payer?.lastName ? payment.payer.lastName[0] + "." : "";
+const name = payment.payer?.isAnonymous
+  ? "Donateur anonyme"
+  : `${firstName} ${lastInitial}`.trim();
         donors.push({
           name,
           amount: Math.round((payment.amount || 0) / 100),
