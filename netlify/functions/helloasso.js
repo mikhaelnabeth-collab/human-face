@@ -31,7 +31,7 @@ exports.handler = async () => {
     for (const payment of data.data || []) {
       if (payment.state === "Authorized" || payment.state === "Processed") {
         onlineCents += payment.amount || 0;
-const firstName = payment.payer?.firstName || "";
+    const firstName = payment.payer?.firstName || "";
 const lastInitial = payment.payer?.lastName ? payment.payer.lastName[0] + "." : "";
 const name = payment.payer?.isAnonymous
   ? "Donateur anonyme"
