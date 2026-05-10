@@ -576,6 +576,27 @@ nav {
 .don-btn-amount { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); display: block; margin-bottom: 0.15rem; }
 .don-btn-use { font-size: 0.72rem; color: var(--text-muted); font-weight: 300; }
 
+/* ─── DONATEURS ─── */
+.donors-list {
+  margin-top: 1.8rem;
+  border-top: 0.5px solid var(--border);
+  padding-top: 1.2rem;
+}
+.donors-label {
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 0.8rem;
+}
+.donors-scroll {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  max-height: 180px; overflow-y: auto;
+}
+.donor-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 0.78rem;
+}
+.donor-name { color: var(--text); }
+.donor-amount { color: var(--gold); font-weight: 500; font-size: 0.72rem; }
+
 /* ─── RDV CHOOSER ─── */
 .rdv-chooser { margin-top: 1.4rem; }
 .rdv-intro { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
@@ -1187,6 +1208,12 @@ nav {
     <div class="don-bottom-left">
       <p style="font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--text);line-height:1.4;margin-bottom:0.4rem;">Le débat n'attend pas.<br>Votre don non plus.</p>
       <p class="don-note" style="margin:0;">Un mécénat de matching permet de doubler toutes vos contributions.</p>
+      <div class="donors-list">
+        <p class="donors-label">Ils ont déjà contribué</p>
+        <div class="donors-scroll" id="donors-list">
+          <p style="font-size:0.72rem;color:var(--text-muted);">Chargement…</p>
+        </div>
+      </div>
     </div>
     <div class="don-bottom-right">
       <div class="don-amounts">
@@ -1247,7 +1274,7 @@ nav {
 
     <div class="contact-links">
       <a href="mailto:contact@oecj.eu" class="contact-link">
-        <div><p class="cl-label">Email</p><p class="cl-val">contact@oecj.fr</p></div>
+        <div><p class="cl-label">Email</p><p class="cl-val">contact@oecj.eu</p></div>
       </a>
       <a href="http://www.linkedin.com/company/human-face" target="_blank" class="contact-link">
         <div><p class="cl-label">LinkedIn</p><p class="cl-val">Human Face — suivre les analyses</p></div>
@@ -1378,10 +1405,22 @@ nav {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
       if (data.amount !== undefined) updateUI(data.amount);
+      if (data.donors && data.donors.length) {
+        const list = document.getElementById('donors-list');
+        if (list) {
+          list.innerHTML = data.donors.map(d => `
+            <div class="donor-row">
+              <span class="donor-name">${d.name}</span>
+              <span class="donor-amount">${d.amount.toLocaleString('fr-FR')} €</span>
+            </div>
+          `).join('');
+        }
+      }
     } catch (e) {
-      // En cas d'échec, on anime quand même avec les valeurs statiques
       console.warn('HelloAsso fetch failed, using static values:', e.message);
       updateUI(39400);
+      const list = document.getElementById('donors-list');
+      if (list) list.innerHTML = '';
     }
   }
 
