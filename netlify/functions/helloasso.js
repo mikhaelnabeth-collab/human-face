@@ -3,7 +3,6 @@ exports.handler = async () => {
   const CLIENT_SECRET = process.env.HELLOASSO_CLIENT_SECRET;
   const ORG_SLUG      = process.env.HELLOASSO_ORG_SLUG;
   const FORM_SLUG     = process.env.HELLOASSO_FORM_SLUG;
-
   const GOAL = 350000;
 
   try {
@@ -19,18 +18,24 @@ exports.handler = async () => {
 
     const { access_token } = await tokenRes.json();
 
-    // On liste tous les formulaires pour trouver le bon type
-    const formsRes = await fetch(
-      `https://api.helloasso.com/v5/organizations/${ORG_SLUG}/forms`,
+    const statsRes = await fetch(
+      `https://api.helloasso.com/v5/organizations/${ORG_SLUG}/forms/Donation/${FORM_SLUG}/statistics`,
       { headers: { Authorization: `Bearer ${access_token}` } }
     );
 
-    const formsText = await formsRes.text();
+    const stats = await statsRes.json();
+    const amountCents = stats.totalAmount ?? stats.amountCollected ?? 0;
+    const amount      = Math.round(amountCents / 100);
+    const pct         = Math.round((amount / GOAL) * 100);
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
-      body: formsText,
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=3600",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ amount, goal: GOAL, pct }),
     };
 
   } catch (e) {
