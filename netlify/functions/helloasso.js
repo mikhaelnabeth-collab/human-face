@@ -3,6 +3,8 @@ exports.handler = async () => {
   const CLIENT_SECRET = process.env.HELLOASSO_CLIENT_SECRET;
   const ORG_SLUG      = process.env.HELLOASSO_ORG_SLUG;
   const FORM_SLUG     = process.env.HELLOASSO_FORM_SLUG;
+  const GOAL          = 350000;
+  const BASE_AMOUNT   = 39000; // montant de base hors HelloAsso
 
   try {
     const tokenRes = await fetch("https://api.helloasso.com/oauth2/token", {
@@ -17,17 +19,30 @@ exports.handler = async () => {
 
     const { access_token } = await tokenRes.json();
 
-    const statsRes = await fetch(
-      `https://api.helloasso.com/v5/organizations/${ORG_SLUG}/forms/Donation/${FORM_SLUG}/payments`,
+    const res  = await fetch(
+      `https://api.helloasso.com/v5/organizations/${ORG_SLUG}/forms/Donation/${FORM_SLUG}/payments?pageSize=20`,
       { headers: { Authorization: `Bearer ${access_token}` } }
     );
+    const data = await res.json();
 
-    const rawText = await statsRes.text();
+    let onlineCents = 0;
+    for (const payment of data.data || []) {
+      if (payment.state === "Authorized" || payment.state === "Processed") {
+        onlineCents += payment.amount || 0;
+      }
+    }
+
+    const amount = BASE_AMOUNT + Math.round(onlineCents / 100);
+    const pct    = Math.round((amount / GOAL) * 100);
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: statsRes.status, raw: rawText }),
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=3600",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ amount, goal: GOAL, pct }),
     };
 
   } catch (e) {
