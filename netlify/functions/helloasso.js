@@ -17,36 +17,20 @@ exports.handler = async () => {
       }),
     });
 
-    if (!tokenRes.ok) {
-      const err = await tokenRes.text();
-      return { statusCode: 502, body: JSON.stringify({ error: "Token failed", detail: err }) };
-    }
-
     const { access_token } = await tokenRes.json();
 
-    const statsRes = await fetch(
-      `https://api.helloasso.com/v5/organizations/${ORG_SLUG}/Paymentform/Donation/${FORM_SLUG}/statistics`,
+    // On liste tous les formulaires pour trouver le bon type
+    const formsRes = await fetch(
+      `https://api.helloasso.com/v5/organizations/${ORG_SLUG}/forms`,
       { headers: { Authorization: `Bearer ${access_token}` } }
     );
 
-    if (!statsRes.ok) {
-      const err = await statsRes.text();
-      return { statusCode: 502, body: JSON.stringify({ error: "Stats failed", detail: err }) };
-    }
-
-    const stats = await statsRes.json();
-    const amountCents = stats.totalAmount ?? stats.amountCollected ?? 0;
-    const amount      = Math.round(amountCents / 100);
-    const pct         = Math.round((amount / GOAL) * 100);
+    const formsText = await formsRes.text();
 
     return {
       statusCode: 200,
-      headers: {
-        "Content-Type":                "application/json",
-        "Cache-Control":               "public, max-age=3600",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({ amount, goal: GOAL, pct }),
+      headers: { "Content-Type": "application/json" },
+      body: formsText,
     };
 
   } catch (e) {
