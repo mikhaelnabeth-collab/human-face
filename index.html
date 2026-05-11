@@ -44,7 +44,8 @@ body {
   color: var(--dark); font-weight: 500; white-space: nowrap; flex-shrink: 0;
 }
 .ticker-paliers {
-  display: flex; align-items: center; gap: 0; flex: 1;
+  display: flex; align-items: center; gap: 0;
+  margin-left: auto; margin-right: 2rem;
 }
 .ticker-palier {
   display: flex; align-items: center; gap: 0;
@@ -527,7 +528,7 @@ nav {
 .comite-tab:hover { color: var(--text); }
 .comite-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
 .comite-tab--soon { opacity: 0.3; cursor: not-allowed; font-style: italic; }
-.comite-panel { display: none; background: var(--dark-3); border: 0.5px solid var(--border); border-top: none; padding: 1rem; }
+.comite-panel { display: none; background: var(--dark); border: 0.5px solid var(--border); border-top: none; padding: 1rem; }
 .comite-panel.active { display: flex; flex-direction: column; }
 
 /* ─── COMEX STRIP ─── */
@@ -743,7 +744,6 @@ nav {
   <a href="#" class="nav-logo" style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);text-decoration:none;letter-spacing:0.04em;">Human Face</a>
   <div class="nav-links">
     <a href="#projets">Nos projets</a>
-    <a href="#don">Faire un don</a>
     <a href="#contact">Contact</a>
     <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="nav-don">Faire un don →</a>
   </div>
@@ -762,7 +762,6 @@ nav {
     </p>
     <div class="hero-ctas fu d3">
       <a href="#projets" class="btn btn-primary">Voir nos projets</a>
-      <a href="#don" class="btn btn-outline">Faire un don</a>
     </div>
   </div>
 
@@ -770,7 +769,7 @@ nav {
     <p class="hero-don-label">Levée de fonds 2026</p>
     <h2 class="hero-don-title">Votre don a la capacité de changer le débat public.</h2>
     <p class="hero-don-sub">
-      Les projets Human Face reposent sur votre générosité.<br> 
+      Réaliser des projets nécessite de les financer. La guerre de communication nous concerne tous.<br> 
     </p>
     <div class="prog-hero">
       <div class="prog-hero-top">
@@ -828,30 +827,30 @@ nav {
       </div><!-- /proj-bars -->
 
       <div class="prog-footer" style="margin-top:0.6rem;">
-        <span class="prog-pct" id="ha-pct">11% atteint</span>
-        <span class="prog-date">Dernière màj : 10 mai 2026</span>
+        <span class="prog-date" id="ha-pct">11% de l'objectif atteint</span>
       </div>
     </div>
+    <div style="height:0.5px;background:var(--border);margin:1.2rem 0;"></div>
     <div class="paliers">
-      <button class="palier" data-amount="500">
+      <button class="palier" data-amount="500" onclick="selectPalier(this)">
         <span class="palier-amount">500 €</span>
-        <span class="palier-desc">soit 14€/mois après déduction d'impôts </span>
+        <span class="palier-desc">soit 14€/mois après déduction d'impôts</span>
       </button>
-      <button class="palier active" data-amount="1000">
+      <button class="palier" data-amount="1500" onclick="selectPalier(this)">
         <span class="palier-amount">1 500 €</span>
         <span class="palier-desc">soit 42€/mois après déduction d'impôts</span>
       </button>
-      <button class="palier" data-amount="2500">
+      <button class="palier" data-amount="5000" onclick="selectPalier(this)">
         <span class="palier-amount">5 000 €</span>
         <span class="palier-desc">Adhésion au réseau</span>
       </button>
-      <button class="palier" data-amount="custom">
+      <button class="palier" data-amount="custom" onclick="selectPalier(this)">
         <span class="palier-amount" style="font-size:0.9rem;font-family:'DM Sans',sans-serif;">Autre</span>
         <span class="palier-desc">Montant libre</span>
       </button>
     </div>
-    <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="btn btn-primary" style="width:100%;text-align:center;display:block;">
-      Faire un don maintenant →
+    <a id="don-cta" href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="btn btn-primary" style="width:100%;text-align:center;display:block;margin-top:0.8rem;">
+      Je soutiens Human Face →
     </a>
 <p class="don-note-sm">
   Paiement sécurisé via HelloAsso ou virement bancaire.<br>  
@@ -1274,7 +1273,7 @@ nav {
 
     <div class="contact-links">
       <a href="mailto:contact@oecj.eu" class="contact-link">
-        <div><p class="cl-label">Email</p><p class="cl-val">contact@oecj.eu</p></div>
+        <div><p class="cl-label">Email</p><p class="cl-val">contact@oecj.fr</p></div>
       </a>
       <a href="http://www.linkedin.com/company/human-face" target="_blank" class="contact-link">
         <div><p class="cl-label">LinkedIn</p><p class="cl-val">Human Face — suivre les analyses</p></div>
@@ -1425,6 +1424,22 @@ nav {
   }
 
   fetchHelloAsso();
+
+  // Paliers hero — déblocage du CTA don
+  function selectPalier(btn) {
+    document.querySelectorAll('.palier').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cta = document.getElementById('don-cta');
+    if (cta) {
+      const amount = btn.dataset.amount;
+      if (amount === 'custom') {
+        cta.textContent = 'Je fais un don →';
+      } else {
+        const formatted = parseInt(amount).toLocaleString('fr-FR');
+        cta.textContent = `Je donne ${formatted} € →`;
+      }
+    }
+  }
 
   // Paliers hero
   document.querySelectorAll('.palier').forEach(btn => {
