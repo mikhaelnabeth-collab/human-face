@@ -99,6 +99,43 @@ body {
 }
 .ticker-btn:hover { background: #222; }
 
+/* ─── NAV BURGER ─── */
+.nav-burger {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center;
+  gap: 5px; width: 36px; height: 36px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.nav-burger span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--text); border-radius: 2px;
+  transition: transform 0.25s, opacity 0.2s;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+  .nav-burger { display: flex; }
+  .nav-links {
+    display: none;
+    position: fixed; top: 58px; left: 0; right: 0;
+    background: rgba(17,16,16,0.98); backdrop-filter: blur(10px);
+    flex-direction: column; gap: 0;
+    border-bottom: 0.5px solid var(--border);
+    z-index: 199;
+    padding: 0.5rem 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a {
+    padding: 1rem 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .nav-links a:last-child { border-bottom: none; }
+  .nav-don { margin: 0.5rem 1.5rem 0.5rem !important; padding: 0.7rem 1rem !important; text-align: center; }
+}
+
 /* ─── NAV ─── */
 nav {
   position: fixed; top: 30px; left: 0; right: 0; z-index: 200;
@@ -817,6 +854,15 @@ nav {
   padding: 1.2rem; border-left: 0.5px solid var(--border);
   display: flex; flex-direction: column; gap: 0.8rem;
 }
+@media (max-width: 900px) {
+  .etude-col {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    border-left: none;
+    border-top: 0.5px solid var(--border);
+    padding: 1.2rem 0;
+  }
+}
 .etude-card {
   display: flex; flex-direction: column; flex: 1;
   border: 0.5px solid var(--border);
@@ -997,11 +1043,14 @@ nav {
 <!-- ─── NAV ─── -->
 <nav>
   <a href="#" class="nav-logo" style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);text-decoration:none;letter-spacing:0.04em;">Human Face</a>
-  <div class="nav-links">
-    <a href="#projets">Nos projets</a>
-    <a href="#contact">Contact</a>
+  <div class="nav-links" id="nav-links">
+    <a href="#projets" onclick="closeMenu()">Nos projets</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
     <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="nav-don">Faire un don →</a>
   </div>
+  <button class="nav-burger" id="nav-burger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ─── HERO SPLIT ─── -->
@@ -1793,7 +1842,19 @@ nav {
     }
   }
 
-  fetchHelloAsso();
+  // ─── BURGER MENU ───
+  function toggleMenu() {
+    const links = document.getElementById('nav-links');
+    const burger = document.getElementById('nav-burger');
+    links.classList.toggle('open');
+    burger.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('nav-burger').classList.remove('open');
+  }
+
+
 
   // Paliers hero — déblocage du CTA don
   function selectPalier(btn) {
