@@ -45,7 +45,7 @@ body {
 }
 .ticker-paliers {
   display: flex; align-items: center; gap: 0.6rem;
-  margin-left: auto; margin-right: 0;
+  margin-left: auto; margin-right: auto;
 }
 .ticker-progress {
   width: 80px; flex-shrink: 0;
@@ -204,8 +204,8 @@ nav {
   font-size: 0.72rem; color: var(--text); font-style: italic;
   font-family: 'Playfair Display', serif;
 }
-.don-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: start; margin-top: 2rem; border: 0.5px solid var(--border); }
-.comite-tabs-wrap { padding: 1.2rem; }
+.don-split { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 0; align-items: start; margin-top: 2rem; border: 0.5px solid var(--border); }
+.comite-tabs-wrap { grid-column: 1; grid-row: 1; padding: 1.2rem; }
 @media (max-width: 900px) { .don-split { grid-template-columns: 1fr; } .partners-col { border-left: none; border-top: 0.5px solid var(--border); } }
 
 /* ─── HOOK PANELS ─── */
@@ -558,8 +558,8 @@ nav {
 
 /* ─── DON BOTTOM BAND ─── */
 .don-bottom {
-  display: grid; grid-template-columns: 1fr 1.6fr;
-  gap: 3rem; align-items: center;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: start;
   margin-top: 2.5rem;
   padding-top: 2rem;
   border-top: 0.5px solid var(--border);
@@ -697,6 +697,230 @@ nav {
 @media (max-width: 500px) {
   .projet-photos, .connector-row, .projet-solutions { grid-template-columns: 1fr; }
   .don-amounts { grid-template-columns: 1fr; }
+}
+
+/* ─── CE QUE NOUS AVONS FAIT ─── */
+#realisations {
+  padding: 3.5rem 4rem;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--dark);
+}
+.real-tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 0.5px solid var(--border); }
+.real-tab {
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.6rem 1.4rem; background: none; border: none;
+  color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.real-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.real-tab:hover { color: var(--text); }
+
+.real-carousel-wrap { margin-top: 1.5rem; overflow: hidden; border: 0.5px solid var(--border); border-right: none; }
+.real-cards { display: flex; gap: 0; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1); }
+.real-card {
+  flex: 0 0 calc(33.333% - 0px);
+  border-right: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  cursor: pointer;
+  transition: background 0.2s; display: flex; flex-direction: column;
+}
+.real-card:hover { background: rgba(201,168,76,0.03); }
+.real-card-img {
+  height: 140px; background: var(--dark-3);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.real-card-img-label {
+  font-family: 'Playfair Display', serif; font-size: 3rem;
+  color: var(--gold); opacity: 0.08; font-weight: 700; letter-spacing: -0.02em;
+  position: absolute;
+}
+.real-card-tag {
+  position: absolute; top: 0.8rem; left: 0.8rem;
+  font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--gold); color: var(--dark); padding: 0.2rem 0.5rem; font-weight: 500;
+}
+.real-card-body { padding: 1.2rem 1.4rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+.real-card-title {
+  font-family: 'Playfair Display', serif; font-size: 1rem;
+  color: var(--text); line-height: 1.35;
+}
+.real-card-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; flex: 1; }
+.real-card-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 0.8rem; border-top: 0.5px solid var(--border); margin-top: 0.6rem;
+}
+.real-card-media { font-size: 0.65rem; color: var(--text-muted); font-style: italic; font-family: 'Playfair Display', serif; }
+.real-card-arrow { color: var(--gold); font-size: 0.85rem; }
+
+.real-nav { display: flex; align-items: center; gap: 0.6rem; margin-top: 1.2rem; }
+.real-nav-btn {
+  background: none; border: 0.5px solid var(--border);
+  color: var(--text); width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 0.85rem; transition: all 0.15s;
+}
+.real-nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+.real-nav-count { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.06em; }
+
+/* Modal */
+.real-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.88); align-items: center; justify-content: center; }
+.real-modal.open { display: flex; }
+.real-modal-inner { background: var(--dark); border: 0.5px solid var(--border); max-width: 560px; width: 92%; padding: 2rem; position: relative; }
+.real-modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.1rem; cursor: pointer; line-height: 1; }
+.real-modal-img { height: 200px; background: var(--dark-3); margin-bottom: 1.4rem; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+.real-modal-img-label { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold); opacity: 0.1; font-weight: 700; }
+.real-modal-type { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+.real-modal-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 1rem; line-height: 1.4; }
+.real-modal-text { font-size: 0.82rem; color: var(--text-muted); line-height: 1.8; }
+
+@media (max-width: 800px) {
+  #realisations { padding: 2.5rem 1.5rem; }
+  .real-card { flex: 0 0 calc(85% - 0.6rem); }
+}
+
+/* ─── LOGOS PARTENAIRES ─── */
+.logos-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0; margin-top: 0.8rem;
+}
+.logo-typo {
+  padding: 1rem 1.2rem;
+  border-right: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  font-size: 1rem; font-weight: 700; letter-spacing: -0.02em;
+  color: rgba(232,228,220,0.25);
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.2s;
+  display: flex; align-items: center;
+  line-height: 1;
+}
+.logo-typo:hover { color: rgba(232,228,220,0.7); }
+.logo-typo:nth-child(2n) { border-right: none; }
+.logo-typo--serif { font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic; }
+.logo-typo--fff { font-size: 1.3rem; letter-spacing: 0.08em; }
+.logo-typo--sm { font-size: 0.85rem; }
+
+/* ─── ÉTUDE PHARE ─── */
+.etude-col {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  padding: 1.2rem; border-left: 0.5px solid var(--border);
+  display: flex; flex-direction: column; gap: 0.8rem;
+}
+.etude-card {
+  display: flex; flex-direction: column; flex: 1;
+  border: 0.5px solid var(--border);
+}
+.etude-img {
+  position: relative; overflow: hidden;
+  flex-shrink: 0;
+  max-height: 280px; aspect-ratio: 2/3;
+  background: var(--dark-3);
+}
+.etude-img img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block; z-index: 1;
+}
+.etude-img-placeholder {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  z-index: 0;
+}
+.etude-img-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-style: italic;
+  color: rgba(201,168,76,0.18); text-align: center; line-height: 1.4;
+}
+.etude-body {
+  padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1;
+}
+.etude-type {
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); font-weight: 500;
+}
+.etude-title {
+  font-family: 'Playfair Display', serif; font-size: 0.95rem;
+  color: var(--text); line-height: 1.4; font-weight: 400;
+}
+.etude-desc {
+  font-size: 0.72rem; color: var(--text-muted); line-height: 1.65;
+  font-weight: 300; flex: 1;
+}
+.etude-dl {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-top: 0.4rem; padding: 0.55rem 1rem;
+  border: 0.5px solid var(--gold); color: var(--gold);
+  text-decoration: none; font-size: 0.68rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: all 0.2s; align-self: flex-start;
+}
+.etude-dl:hover { background: var(--gold); color: var(--dark); }
+.etude-dl-icon { font-size: 0.9rem; }
+
+/* ─── LOGOS BANNER STATIQUE ─── */
+.logos-banner {
+  grid-column: 1;
+  grid-row: 2;
+  border-top: 0.5px solid var(--border);
+  border-right: 0.5px solid var(--border);
+  padding: 1.2rem;
+  background: var(--dark);
+}
+.logos-banner-label {
+  font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 1rem; display: block;
+}
+.logos-grid-static {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.lgs-name {
+  padding: 0.9rem 1rem;
+  border-right: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  font-size: 1rem; color: rgba(232,228,220,0.35);
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+  transition: color 0.2s; line-height: 1;
+  display: flex; align-items: center;
+}
+.lgs-name:hover { color: rgba(232,228,220,0.85); }
+.lgs-name:nth-child(4n) { border-right: none; }
+.lgs-name:nth-child(n+5) { border-bottom: none; }
+.lgs-serif { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05rem; }
+.lgs-bold { font-weight: 700; letter-spacing: 0.1em; font-size: 0.9rem; }
+.lgs-sm { font-size: 0.72rem; line-height: 1.45; }
+@media (max-width: 700px) {
+  .logos-grid-static { grid-template-columns: repeat(2, 1fr); }
+  .lgs-name:nth-child(4n) { border-right: 0.5px solid var(--border); }
+  .lgs-name:nth-child(2n) { border-right: none; }
+}
+
+/* ─── LOGOS FULL WIDTH ─── */
+.logos-banner--full {
+  grid-column: unset !important;
+  grid-row: unset !important;
+  border-right: none !important;
+  border-top: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  margin-top: 0;
+}
+.logos-banner--full .logos-grid-static {
+  grid-template-columns: repeat(3, 1fr);
+}
+.logos-banner--full .lgs-name { border-right: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); font-size: 1rem; }
+.logos-banner--full .lgs-name:nth-child(3n) { border-right: none; }
+.logos-banner--full .lgs-name--wide {
+  grid-column: span 3 / span 3;
+  border-right: none;
+  font-size: 0.82rem;
+}
+.logos-banner--full .lgs-name--wide:last-child { border-bottom: none; }
+@media (max-width: 700px) {
+  .logos-banner--full .logos-grid-static { grid-template-columns: 1fr 1fr; }
+  .logos-banner--full .lgs-name:nth-child(3n) { border-right: 0.5px solid var(--border); }
+  .logos-banner--full .lgs-name:nth-child(2n) { border-right: none; }
+  .logos-banner--full .lgs-name--wide { grid-column: span 2; }
 }
 </style>
 </head>
@@ -885,8 +1109,8 @@ nav {
 
 <!-- ─── 4 PROJETS PHARE ─── -->
 <section id="projets">
-  <p class="section-label">NoS projets phares</p>
-  <h2 class="section-title">Ce que personne d'autre ne finance.</h2>
+  <p class="section-label">Ce que personne d'autre ne finance</p>
+  <h2 class="section-title">Nos projets phares 2026/2027</h2>
   <p class="section-intro">
     Notre lutte contre l'antisémitisme est fondée sur une optimisation de l'impact social. 
   </p>
@@ -1077,10 +1301,154 @@ nav {
 
 </section>
 
+
+<!-- ─── CE QUE NOUS AVONS FAIT ─── -->
+<section id="realisations">
+  <p class="section-label">Nos travaux · 2024 – 2026</p>
+  <h2 class="section-title">Ce que nous avons produit</h2>
+
+  <div class="real-tabs">
+    <button class="real-tab active" onclick="filterReal('tout', this)">Tout</button>
+    <button class="real-tab" onclick="filterReal('media', this)">Médias</button>
+    <button class="real-tab" onclick="filterReal('etude', this)">Études</button>
+    <button class="real-tab" onclick="filterReal('politique', this)">Événements</button>
+  </div>
+
+  <div class="real-carousel-wrap">
+    <div class="real-cards" id="real-cards">
+
+      <div class="real-card" data-cat="politique" onclick="openReal(0)">
+        <div class="real-card-img">
+          <div class="real-card-img-label">FFF</div>
+          <span class="real-card-tag">Rapports d'influence</span>
+        </div>
+        <div class="real-card-body">
+          <p class="real-card-title">Etude sociologique et rapports à destination des politiques et de la Fédération Française de Football</p>
+          <p class="real-card-desc">Human Face a été reçu en cabinet ministériel et aux Assises de Lutte contre l'Antisémitisme.</p>
+          <div class="real-card-foot">
+            <span class="real-card-media">Novembre 2023 · 2026</span>
+            <span class="real-card-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="real-card" data-cat="etude" onclick="openReal(1)">
+        <div class="real-card-img">
+          <div class="real-card-img-label">F. Magellan</div>
+          <span class="real-card-tag">Portée nationale</span>
+        </div>
+        <div class="real-card-body">
+          <p class="real-card-title">Résultats d'enquête citée dans un ouvrage</p>
+          <p class="real-card-desc">Dans "Le sport à l'épreuve des idéologies", le journaliste Frédéric Magellan a cité en préambule l'enquête réalisée par Human Face auprès des supporters de football.</p>
+          <div class="real-card-foot">
+            <span class="real-card-media">Janvier 2026</span>
+            <span class="real-card-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+
+            <div class="real-card" data-cat="etude" onclick="openReal(2)">
+        <div class="real-card-img">
+          <div class="real-card-img-label">OEJC</div>
+          <span class="real-card-tag">Portée nationale</span>
+        </div>
+        <div class="real-card-body">
+          <p class="real-card-title">Enquête quantitative auprès de 500 répondants</p>
+          <p class="real-card-desc">Dynamiques idéologiques des Français sur la création de la Palestine. Un travail sociologique qui mérite d'être transformé en essai selon Pierre-André Taguieff</p>
+          <div class="real-card-foot">
+            <span class="real-card-media">Mai 2025</span>
+            <span class="real-card-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="real-card" data-cat="media" onclick="openReal(2)">
+        <div class="real-card-img">
+          <div class="real-card-img-label">i24</div>
+          <span class="real-card-tag">Télévision internationale</span>
+        </div>
+        <div class="real-card-body">
+          <p class="real-card-title">Interview i24 News — Une voix sociologique sur Israël</p>
+          <p class="real-card-desc">Présentation de données originales sur la perception d'Israël dans les médias français.</p>
+          <div class="real-card-foot">
+            <span class="real-card-media">2025-2026</span>
+            <span class="real-card-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="real-card" data-cat="media" onclick="openReal(3)">
+        <div class="real-card-img">
+          <div class="real-card-img-label">CNews</div>
+          <span class="real-card-tag">Télévision internationale</span>
+        </div>
+        <div class="real-card-body">
+          <p class="real-card-title">Collaboration éditoriale sur CNews, Causeur</p>
+          <p class="real-card-desc">Partage d'éléments inédits, rédaction et diffusion nationale de sujets proposés.</p>
+          <div class="real-card-foot">
+            <span class="real-card-media">2024-2025</span>
+            <span class="real-card-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="real-card" data-cat="media" onclick="openReal(4)">
+        <div class="real-card-img">
+          <div class="real-card-img-label">LinkedIn</div>
+          <span class="real-card-tag">500 000 comptes touchés</span>
+        </div>
+        <div class="real-card-body">
+          <p class="real-card-title">Campagne d'influence — 500 000 comptes touchés par an</p>
+          <p class="real-card-desc">CTR de 10,4%, soit 10× la moyenne sectorielle. Diffusion auprès de décideurs et journalistes français et internationaux.</p>
+          <div class="real-card-foot">
+            <span class="real-card-media">LinkedIn · 2024–2026</span>
+            <span class="real-card-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="real-card" data-cat="politique" onclick="openReal(5)">
+        <div class="real-card-img">
+          <div class="real-card-img-label">Ministère</div>
+          <span class="real-card-tag">Ancrage institutionnel</span>
+        </div>
+        <div class="real-card-body">
+          <p class="real-card-title">Invité aux Assises de lutte contre l'antisémitisme, collaboration avec les Ministères français.</p>
+          <p class="real-card-desc">Nos travaux intégrés dans les réflexions des cabinets du Ministère des Discriminations et du Ministère de la Diaspora.</p>
+          <div class="real-card-foot">
+            <span class="real-card-media">Paris · 2025–2026</span>
+            <span class="real-card-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="real-nav">
+    <button class="real-nav-btn" onclick="slideReal(-1)">←</button>
+    <button class="real-nav-btn" onclick="slideReal(1)">→</button>
+    <span class="real-nav-count" id="real-count">1 – 2 sur 6</span>
+  </div>
+</section>
+
+<!-- Modal réalisation -->
+<div class="real-modal" id="real-modal" onclick="closeReal()">
+  <div class="real-modal-inner" onclick="event.stopPropagation()">
+    <button class="real-modal-close" onclick="closeReal()">✕</button>
+    <div class="real-modal-img">
+      <div class="real-modal-img-label" id="real-modal-img-label"></div>
+    </div>
+    <p class="real-modal-type" id="real-modal-type"></p>
+    <p class="real-modal-title" id="real-modal-title"></p>
+    <p class="real-modal-text" id="real-modal-text"></p>
+  </div>
+</div>
+
 <!-- ─── DON FINAL ─── -->
 <section id="don" style="padding:4.5rem 4rem;border-bottom:0.5px solid var(--border);background:var(--dark);">
   <p class="section-label">Levée de fonds · Mai 2026 - Les discours de haine pullulent. Agir maintenant ! </p>
-  <h2 class="section-title">Créer une entité intellectuelle</h2>
+  <h2 class="section-title">L'OEJC - Observatoire des Enjeux Civilisationnels</h2>
 
   <!-- GRILLE COMEX + DON -->
   <div class="don-split">
@@ -1169,32 +1537,27 @@ nav {
 
     </div><!-- /comite-tabs-wrap -->
 
-    <!-- Colonne droite : présence & partenaires -->
-    <div class="partners-col">
-      <p class="partners-col-title">Présence & partenaires</p>
 
-      <div class="partner-box">
-        <p class="partner-box-cat">Institutions</p>
-        <p class="partner-box-desc">Travail collaboratif avec les institutions les plus influentes de la société civile française.</p>
-        <p class="partner-box-names">Fédération Française de Football · Ligue de Football Professionnelle</p>
-      </div>
 
-      <div class="partner-box">
-        <p class="partner-box-cat">Ministères</p>
-        <p class="partner-box-desc">Nos analyses alimentent les réflexions des cabinets ministériels sur les questions identitaires.</p>
-        <p class="partner-box-names">Ministère chargé des Discriminations (Fr) ·  Ministère de la Diaspora (IL) </p>
-      </div>
-
-      <div class="partner-box">
-        <p class="partner-box-cat">Médias français</p>
-        <p class="partner-box-desc">Un travail plébiscité et des chercheurs invités dans les grands médias nationaux.</p>
-        <p class="partner-box-names">Le Figaro · CNews · Causeur · L'Express</p>
-      </div>
-
-      <div class="partner-box">
-        <p class="partner-box-cat">Influence </p>
-        <p class="partner-box-desc">500 000 comptes différents touchés sur LinkedIn par an. CTR de 10,4% — soit 10× la moyenne sectorielle.</p>
-        <p class="partner-box-names" style="color:var(--gold);">Analyses à destination des politiques · Réseau LinkedIn</p>
+    <!-- Colonne droite : étude phare -->
+    <div class="etude-col">
+      <p class="partners-col-title">Étude phare</p>
+      <div class="etude-card">
+        <div class="etude-img">
+          <img src="images/affiche-etude.png" alt="Étude sociologique Human Face" onerror="this.style.display='none'"/>
+          <div class="etude-img-placeholder">
+            <span class="etude-img-label">Étude<br>sociologique</span>
+          </div>
+        </div>
+        <div class="etude-body">
+          <p class="etude-type">Enquête sociologique · Mai 2025</p>
+          <p class="etude-title">Adhésion des Français à la création d'un État Palestinien</p>
+          <p class="etude-desc">Notre enquête, produite quelques mois avant la reconnaissance du Président Macron d'un État Palestinien à l'ONU, a permis de figer les dynamiques idéologiques pour les ancrer dans l'Histoire. Politiquement, elle a isolé la démarche présidentielle.</p>
+          <a href="pdf/etude-phare.pdf" download class="etude-dl">
+            <span class="etude-dl-icon">↓</span>
+            Télécharger l'étude
+          </a>
+        </div>
       </div>
     </div>
 
@@ -1202,37 +1565,35 @@ nav {
 
   <!-- FORMULAIRE DON — pleine largeur en bas -->
   <div class="don-bottom">
-    <div class="don-bottom-right">
+    <div class="don-bottom-left">
       <div class="don-amounts">
-        <button class="don-btn">
+        <button class="don-btn" onclick="selectDon(this,500)">
           <span class="don-btn-amount">500 €</span>
           <span class="don-btn-use">soit 14€/mois après déduction d'impôts</span>
         </button>
-        <button class="don-btn active">
+        <button class="don-btn" onclick="selectDon(this,1500)">
           <span class="don-btn-amount">1 500 €</span>
           <span class="don-btn-use">soit 42€/mois après déduction d'impôts</span>
         </button>
-        <button class="don-btn">
+        <button class="don-btn" onclick="selectDon(this,5000)">
           <span class="don-btn-amount">5 000 €</span>
           <span class="don-btn-use">Adhésion au réseau Human Face</span>
         </button>
-        <button class="don-btn">
+        <button class="don-btn" onclick="selectDon(this,0)">
           <span class="don-btn-amount">Autre</span>
           <span class="don-btn-use">Montant libre</span>
         </button>
       </div>
-      <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="btn btn-primary" style="width:100%;text-align:center;display:block;margin-top:0.8rem;">
-        Faire un don maintenant →
+      <a id="don-cta" href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="btn btn-primary" style="width:100%;text-align:center;display:block;margin-top:0.8rem;">
+        Je soutiens Human Face →
       </a>
       <p class="don-note-sm">
-        Paiement sécurisé via HelloAsso ou virement bancaire.<br>
-        <a href="pdf/rib.pdf" download style="color: inherit; text-decoration: none;">RIB à télécharger ici</a>
-        · Reçu fiscal disponible.
+        Paiement sécurisé · HelloAsso · <a href="pdf/rib.pdf" download style="color:inherit;text-decoration:none;">RIB</a> · Reçu fiscal
       </p>
     </div>
-    <div class="don-bottom-left">
-      <p style="font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--text);line-height:1.4;margin-bottom:0.4rem;">Le débat n'attend pas.<br>Votre don non plus.</p>
-      <p class="don-note" style="margin:0;">Un mécénat de matching permet de doubler toutes vos contributions.</p>
+    <div class="don-bottom-right">
+      <p style="font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--text);line-height:1.4;margin-bottom:0.6rem;">Le débat n'attend pas.<br>Votre don non plus.</p>
+      <p class="don-note" style="margin-bottom:1rem;">Une opération de matching doublera vos contributions.</p>
       <div class="donors-list">
         <p class="donors-label">Ils ont déjà contribué</p>
         <div class="donors-scroll" id="donors-list">
@@ -1245,11 +1606,11 @@ nav {
 
 <!-- ─── CONTACT ─── -->
 <section id="contact">
-  <p class="section-label">Prochaines sessions Paris — Mai 2026</p>
+  <p class="section-label">Prochaines rencontres Paris — Mai 2026</p>
   <h2 class="section-title">Rencontrons-nous</h2>
   <div class="contact-grid">
     <div>
-      <p class="contact-text">Vous souhaitez en savoir plus avant de vous engager ? Organisons une session de rencontre pour répondre à vos questions.</p>
+      <p class="contact-text">Vous souhaitez en savoir plus avant de vous engager ? Organisons une rencontre pour répondre à vos questions.</p>
 
       <!-- RDV CHOOSER -->
       <div class="rdv-chooser">
@@ -1456,6 +1817,79 @@ nav {
       btn.classList.add('active');
     });
   });
+  // ─── CE QUE NOUS AVONS FAIT ───
+  const realData = [
+    { type: 'Événement', label: 'FFF', title: 'Avoir alerté les autorités sur le mutisme du Football Français', text: 'Human Face a été reçu en cabinet ministériel afin de coordonner une action de communication à la faveur des otages israéliens.' },
+    { type: 'Presse nationale', label: 'Figaro', title: 'Analyse publiée dans Le Figaro', text: 'Décryptage des enjeux identitaires contemporains publié dans Le Figaro. L\'article a positionné Human Face comme référence analytique dans le débat public français.' },
+    { type: 'Télévision internationale', label: 'i24', title: 'Interview i24 News — La voix française sur Israël', text: 'Human Face présente ses données originales sur la perception d\'Israël dans les médias français. Une présence régulière dans les médias israéliens de référence.' },
+    { type: 'Télévision nationale', label: 'CNews', title: 'Intervention sur CNews', text: 'Analyse du traitement médiatique des conflits identitaires en France, présentée en direct sur CNews. Nos chercheurs y décryptent les biais et les narratifs dominants.' },
+    { type: 'Étude LinkedIn', label: '500k', title: 'Campagne d\'influence — 500 000 comptes touchés', text: 'CTR de 10,4%, soit 10× la moyenne sectorielle. Diffusion auprès de décideurs, journalistes et personnalités politiques françaises et internationales. Une campagne unique par son efficacité.' },
+    { type: 'Institutionnel', label: 'Min.', title: 'Collaboration avec les Ministères', text: 'Nos travaux ont été intégrés dans les réflexions des cabinets du Ministère chargé des Discriminations et du Ministère chargé de la Diaspora. Une reconnaissance de la qualité de nos analyses.' },
+  ];
+
+  let realIdx = 0;
+  let realVisible = [];
+
+  function filterReal(cat, btn) {
+    document.querySelectorAll('.real-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.real-card');
+    realVisible = [];
+    cards.forEach((c, i) => {
+      const show = cat === 'tout' || c.dataset.cat === cat;
+      c.style.display = show ? 'flex' : 'none';
+      if (show) realVisible.push(i);
+    });
+    realIdx = 0;
+    updateRealCarousel();
+  }
+
+  function slideReal(dir) {
+    const cards = document.getElementById('real-cards');
+    if (!cards) return;
+    const visCards = [...cards.querySelectorAll('.real-card')].filter(c => c.style.display !== 'none');
+    realIdx = Math.max(0, Math.min(realIdx + dir, visCards.length - 3));
+    const w = visCards[0] ? visCards[0].offsetWidth : 0;
+    cards.style.transform = `translateX(-${realIdx * w}px)`;
+    updateRealCount(visCards.length);
+  }
+
+  function updateRealCarousel() {
+    const cards = document.getElementById('real-cards');
+    if (!cards) return;
+    cards.style.transform = 'translateX(0)';
+    const visCards = [...cards.querySelectorAll('.real-card')].filter(c => c.style.display !== 'none');
+    updateRealCount(visCards.length);
+  }
+
+  function updateRealCount(total) {
+    const el = document.getElementById('real-count');
+    if (el) el.textContent = `${realIdx + 1} – ${Math.min(realIdx + 3, total)} sur ${total}`;
+  }
+
+  function openReal(idx) {
+    const r = realData[idx];
+    document.getElementById('real-modal-img-label').textContent = r.label;
+    document.getElementById('real-modal-type').textContent = r.type;
+    document.getElementById('real-modal-title').textContent = r.title;
+    document.getElementById('real-modal-text').textContent = r.text;
+    document.getElementById('real-modal').classList.add('open');
+  }
+  function closeReal() {
+    document.getElementById('real-modal').classList.remove('open');
+  }
+
+  // Init
+  filterReal('tout', document.querySelector('.real-tab'));
+
+  // ─── DON BOUTONS ───
+  function selectDon(btn, amount) {
+    document.querySelectorAll('.don-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cta = document.getElementById('don-cta');
+    if (cta) cta.textContent = amount === 0 ? 'Je fais un don →' : `Je donne ${amount.toLocaleString('fr-FR')} € →`;
+  }
+
 </script>
 </body>
 </html>
