@@ -554,7 +554,11 @@ nav {
 .comex-title-badge { font-size: 0.68rem; color: var(--text-muted); font-weight: 300; font-family: 'DM Sans', sans-serif; }
 .comex-role { font-size: 0.68rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.07em; margin: 0.1rem 0 0.25rem; }
 .comex-bio { font-size: 0.75rem; color: var(--text-muted); font-weight: 300; line-height: 1.5; }
-@media (max-width: 900px) { .don-split { grid-template-columns: 1fr; gap: 2rem; } }
+@media (max-width: 900px) {
+  .don-split { grid-template-columns: 1fr; gap: 2rem; }
+  .etude-col { grid-column: unset; grid-row: unset; border-left: none; border-top: 0.5px solid var(--border); padding: 1.2rem 0; }
+  .comite-tabs-wrap { grid-column: unset; grid-row: unset; }
+}
 
 /* ─── DON BOTTOM BAND ─── */
 .don-bottom {
@@ -685,14 +689,19 @@ nav {
   #don { padding: 3.5rem 1.5rem; }
   #contact { padding: 3rem 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .hook-inner { flex-direction: column; }
+  .hook-video-thumb { width: 100%; min-width: unset; }
 }
 @media (max-width: 768px) {
   nav { padding: 0.9rem 1.5rem; top: 28px; }
   .nav-links { display: none; }
   .ticker { padding: 0.4rem 1rem; }
+  .ticker-paliers { display: none; }
   .ticker-bar-wrap { display: none; }
   footer { flex-direction: column; gap: 0.6rem; text-align: center; padding: 1.5rem; }
   .projet-photos, .connector-row, .projet-solutions { grid-template-columns: 1fr 1fr; }
+  .comite-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .comite-tab { white-space: nowrap; flex-shrink: 0; }
 }
 @media (max-width: 500px) {
   .projet-photos, .connector-row, .projet-solutions { grid-template-columns: 1fr; }
@@ -1446,7 +1455,7 @@ nav {
 </div>
 
 <!-- ─── DON FINAL ─── -->
-<section id="don" style="padding:4.5rem 4rem;border-bottom:0.5px solid var(--border);background:var(--dark);">
+<section id="don">
   <p class="section-label">Levée de fonds · Mai 2026 - Les discours de haine pullulent. Agir maintenant ! </p>
   <h2 class="section-title">L'OECJ - Observatoire des Enjeux Civilisationnels</h2>
 
