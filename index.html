@@ -114,12 +114,12 @@ nav {
 .nav-don { background: var(--gold); color: var(--dark) !important; padding: 0.4rem 1rem; font-weight: 500 !important; }
 .nav-don:hover { background: var(--gold-light) !important; }
 
-/* burger */
+/* ─── BURGER + DRAWER MOBILE ─── */
 .nav-burger {
   display: none;
   flex-direction: column; justify-content: center; align-items: center;
   gap: 5px; width: 36px; height: 36px;
-  background: none; border: none; cursor: pointer; flex-shrink: 0;
+  background: none; border: none; cursor: pointer; flex-shrink: 0; z-index: 400;
 }
 .nav-burger span {
   display: block; width: 22px; height: 1.5px;
@@ -130,28 +130,36 @@ nav {
 .nav-burger.open span:nth-child(2) { opacity: 0; }
 .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
+.nav-drawer {
+  display: none;
+  position: fixed; inset: 0; z-index: 350;
+  background: var(--dark);
+  flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 3rem 2.5rem;
+}
+.nav-drawer.open { display: flex; }
+.nav-drawer a {
+  color: var(--text); text-decoration: none;
+  font-size: 1.4rem; font-family: 'Playfair Display', serif;
+  font-weight: 400; padding: 1rem 0;
+  border-bottom: 0.5px solid var(--border);
+  width: 100%; transition: color 0.2s;
+}
+.nav-drawer a:hover { color: var(--gold); }
+.nav-drawer-don {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.85rem !important; letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  background: var(--gold) !important; color: var(--dark) !important;
+  text-align: center; margin-top: 1.5rem !important;
+  border-bottom: none !important;
+  padding: 1rem 0 !important;
+}
+
 @media (max-width: 768px) {
   nav { padding: 0.75rem 1.5rem; }
+  .nav-links { display: none; }
   .nav-burger { display: flex; }
-  .nav-links {
-    display: none;
-    position: fixed;
-    top: 78px; left: 0; right: 0;
-    background: rgba(17,16,16,0.98);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-    border-bottom: 0.5px solid var(--border);
-    z-index: 199;
-    gap: 0;
-  }
-  .nav-links.open { display: flex; }
-  .nav-links a {
-    padding: 0.95rem 1.5rem;
-    border-bottom: 0.5px solid var(--border);
-    font-size: 0.85rem;
-  }
-  .nav-links a:last-child { border-bottom: none; }
-  .nav-don { margin: 0 !important; background: var(--gold) !important; }
 }
 
 /* ─── HERO SPLIT ─── */
@@ -733,6 +741,11 @@ nav {
   .comite-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .hook-inner { flex-direction: column; }
   .hook-video-thumb { width: 100%; min-width: unset; }
+  /* ─ corrections débordement horizontal ─ */
+  .don-bottom { grid-template-columns: 1fr; gap: 1.5rem; }
+  .real-cards { width: 100%; }
+  * { max-width: 100%; box-sizing: border-box; }
+  img, iframe, video { max-width: 100%; }
 }
 @media (max-width: 500px) {
   .projet-photos, .connector-row, .projet-solutions { grid-template-columns: 1fr; }
@@ -1032,14 +1045,21 @@ nav {
 <nav>
   <a href="#" class="nav-logo" style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);text-decoration:none;letter-spacing:0.04em;">Human Face</a>
   <div class="nav-links" id="nav-links">
-    <a href="#projets" onclick="navClose()">Nos projets</a>
-    <a href="#contact" onclick="navClose()">Contact</a>
-    <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="nav-don" onclick="navClose()">Faire un don →</a>
+    <a href="#projets">Nos projets</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="nav-don">Faire un don →</a>
   </div>
   <button class="nav-burger" id="nav-burger" onclick="navToggle()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<!-- Drawer plein écran mobile -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="#projets" onclick="navClose()">Nos projets</a>
+  <a href="#contact" onclick="navClose()">Contact</a>
+  <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="nav-drawer-don" onclick="navClose()">Faire un don →</a>
+</div>
 
 <!-- ─── HERO SPLIT ─── -->
 <section class="hero" id="top">
@@ -1705,11 +1725,11 @@ nav {
 <script>
   // ─── BURGER MENU ───
   function navToggle() {
-    document.getElementById('nav-links').classList.toggle('open');
+    document.getElementById('nav-drawer').classList.toggle('open');
     document.getElementById('nav-burger').classList.toggle('open');
   }
   function navClose() {
-    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('nav-drawer').classList.remove('open');
     document.getElementById('nav-burger').classList.remove('open');
   }
 
