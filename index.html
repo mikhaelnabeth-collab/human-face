@@ -99,43 +99,6 @@ body {
 }
 .ticker-btn:hover { background: #222; }
 
-/* ─── NAV BURGER ─── */
-.nav-burger {
-  display: none;
-  flex-direction: column; justify-content: center; align-items: center;
-  gap: 5px; width: 36px; height: 36px;
-  background: none; border: none; cursor: pointer; padding: 4px;
-}
-.nav-burger span {
-  display: block; width: 22px; height: 1.5px;
-  background: var(--text); border-radius: 2px;
-  transition: transform 0.25s, opacity 0.2s;
-}
-.nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.nav-burger.open span:nth-child(2) { opacity: 0; }
-.nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-@media (max-width: 768px) {
-  .nav-burger { display: flex; }
-  .nav-links {
-    display: none;
-    position: fixed; top: 58px; left: 0; right: 0;
-    background: rgba(17,16,16,0.98); backdrop-filter: blur(10px);
-    flex-direction: column; gap: 0;
-    border-bottom: 0.5px solid var(--border);
-    z-index: 199;
-    padding: 0.5rem 0;
-  }
-  .nav-links.open { display: flex; }
-  .nav-links a {
-    padding: 1rem 1.5rem;
-    border-bottom: 0.5px solid var(--border);
-    font-size: 0.85rem;
-  }
-  .nav-links a:last-child { border-bottom: none; }
-  .nav-don { margin: 0.5rem 1.5rem 0.5rem !important; padding: 0.7rem 1rem !important; text-align: center; }
-}
-
 /* ─── NAV ─── */
 nav {
   position: fixed; top: 30px; left: 0; right: 0; z-index: 200;
@@ -150,6 +113,46 @@ nav {
 .nav-links a:hover { color: var(--gold); }
 .nav-don { background: var(--gold); color: var(--dark) !important; padding: 0.4rem 1rem; font-weight: 500 !important; }
 .nav-don:hover { background: var(--gold-light) !important; }
+
+/* burger */
+.nav-burger {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center;
+  gap: 5px; width: 36px; height: 36px;
+  background: none; border: none; cursor: pointer; flex-shrink: 0;
+}
+.nav-burger span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--text); border-radius: 2px;
+  transition: transform 0.25s, opacity 0.2s;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+  nav { padding: 0.75rem 1.5rem; }
+  .nav-burger { display: flex; }
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 58px; left: 0; right: 0;
+    background: rgba(17,16,16,0.98);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    border-bottom: 0.5px solid var(--border);
+    z-index: 199;
+    gap: 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a {
+    padding: 0.95rem 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .nav-links a:last-child { border-bottom: none; }
+  .nav-don { margin: 0 !important; background: var(--gold) !important; }
+}
 
 /* ─── HERO SPLIT ─── */
 .hero {
@@ -241,7 +244,7 @@ nav {
   font-size: 0.72rem; color: var(--text); font-style: italic;
   font-family: 'Playfair Display', serif;
 }
-.don-split { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 0; align-items: start; margin-top: 2rem; border: 0.5px solid var(--border); }
+.don-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: start; margin-top: 2rem; border: 0.5px solid var(--border); }
 .comite-tabs-wrap { padding: 1.2rem; }
 @media (max-width: 900px) { .don-split { grid-template-columns: 1fr; } .partners-col { border-left: none; border-top: 0.5px solid var(--border); } }
 
@@ -590,12 +593,6 @@ nav {
 .comex-title-badge { font-size: 0.68rem; color: var(--text-muted); font-weight: 300; font-family: 'DM Sans', sans-serif; }
 .comex-role { font-size: 0.68rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.07em; margin: 0.1rem 0 0.25rem; }
 .comex-bio { font-size: 0.75rem; color: var(--text-muted); font-weight: 300; line-height: 1.5; }
-@media (max-width: 900px) {
-  .don-split { grid-template-columns: 1fr; gap: 2rem; }
-  .etude-col { grid-column: unset; grid-row: unset; border-left: none; border-top: 0.5px solid var(--border); padding: 1.2rem 0; }
-  .comite-tabs-wrap { grid-column: unset; grid-row: unset; }
-}
-
 /* ─── DON BOTTOM BAND ─── */
 .don-bottom {
   display: grid; grid-template-columns: 1fr 1fr;
@@ -725,19 +722,18 @@ nav {
   #don { padding: 3.5rem 1.5rem; }
   #contact { padding: 3rem 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .hook-inner { flex-direction: column; }
-  .hook-video-thumb { width: 100%; min-width: unset; }
 }
 @media (max-width: 768px) {
   nav { padding: 0.9rem 1.5rem; top: 28px; }
-  .nav-links { display: none; }
-  .ticker { padding: 0.4rem 1rem; }
+  .ticker { padding: 0 1rem; gap: 0.8rem; }
   .ticker-paliers { display: none; }
   .ticker-bar-wrap { display: none; }
   footer { flex-direction: column; gap: 0.6rem; text-align: center; padding: 1.5rem; }
   .projet-photos, .connector-row, .projet-solutions { grid-template-columns: 1fr 1fr; }
+  #realisations { padding: 2.5rem 1.5rem; }
   .comite-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .comite-tab { white-space: nowrap; flex-shrink: 0; }
+  .hook-inner { flex-direction: column; }
+  .hook-video-thumb { width: 100%; min-width: unset; }
 }
 @media (max-width: 500px) {
   .projet-photos, .connector-row, .projet-solutions { grid-template-columns: 1fr; }
@@ -750,7 +746,6 @@ nav {
   border-bottom: 0.5px solid var(--border);
   background: var(--dark);
 }
-@media (max-width: 900px) { #realisations { padding: 2.5rem 1.5rem; } }
 .real-tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 0.5px solid var(--border); }
 .real-tab {
   font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
@@ -855,13 +850,7 @@ nav {
   display: flex; flex-direction: column; gap: 0.8rem;
 }
 @media (max-width: 900px) {
-  .etude-col {
-    grid-column: 1 !important;
-    grid-row: auto !important;
-    border-left: none;
-    border-top: 0.5px solid var(--border);
-    padding: 1.2rem 0;
-  }
+  .etude-col { grid-column: 1; grid-row: auto; border-left: none; border-top: 0.5px solid var(--border); }
 }
 .etude-card {
   display: flex; flex-direction: column; flex: 1;
@@ -1044,11 +1033,11 @@ nav {
 <nav>
   <a href="#" class="nav-logo" style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);text-decoration:none;letter-spacing:0.04em;">Human Face</a>
   <div class="nav-links" id="nav-links">
-    <a href="#projets" onclick="closeMenu()">Nos projets</a>
-    <a href="#contact" onclick="closeMenu()">Contact</a>
-    <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="nav-don">Faire un don →</a>
+    <a href="#projets" onclick="navClose()">Nos projets</a>
+    <a href="#contact" onclick="navClose()">Contact</a>
+    <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="nav-don" onclick="navClose()">Faire un don →</a>
   </div>
-  <button class="nav-burger" id="nav-burger" onclick="toggleMenu()" aria-label="Menu">
+  <button class="nav-burger" id="nav-burger" onclick="navToggle()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -1504,7 +1493,7 @@ nav {
 </div>
 
 <!-- ─── DON FINAL ─── -->
-<section id="don">
+<section id="don" style="padding:4.5rem 4rem;border-bottom:0.5px solid var(--border);background:var(--dark);">
   <p class="section-label">Levée de fonds · Mai 2026 - Les discours de haine pullulent. Agir maintenant ! </p>
   <h2 class="section-title">L'OECJ - Observatoire des Enjeux Civilisationnels</h2>
 
@@ -1715,6 +1704,16 @@ nav {
 
 
 <script>
+  // ─── BURGER MENU ───
+  function navToggle() {
+    document.getElementById('nav-links').classList.toggle('open');
+    document.getElementById('nav-burger').classList.toggle('open');
+  }
+  function navClose() {
+    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('nav-burger').classList.remove('open');
+  }
+
   // Onglets comités
   function switchComite(id, btn) {
     document.querySelectorAll('.comite-panel').forEach(p => p.classList.remove('active'));
@@ -1842,19 +1841,7 @@ nav {
     }
   }
 
-  // ─── BURGER MENU ───
-  function toggleMenu() {
-    const links = document.getElementById('nav-links');
-    const burger = document.getElementById('nav-burger');
-    links.classList.toggle('open');
-    burger.classList.toggle('open');
-  }
-  function closeMenu() {
-    document.getElementById('nav-links').classList.remove('open');
-    document.getElementById('nav-burger').classList.remove('open');
-  }
-
-
+  fetchHelloAsso();
 
   // Paliers hero — déblocage du CTA don
   function selectPalier(btn) {
