@@ -778,20 +778,24 @@ nav {
   transition: background 0.2s; display: flex; flex-direction: column;
 }
 .real-card:hover { background: rgba(201,168,76,0.03); }
-.real-card-img {
-  height: 140px; background: var(--dark-3);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
+.real-card-header {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.9rem 1rem 0.75rem;
+  border-bottom: 0.5px solid var(--border);
 }
 .real-card-img-label {
-  font-family: 'Playfair Display', serif; font-size: 3rem;
-  color: var(--gold); opacity: 0.08; font-weight: 700; letter-spacing: -0.02em;
-  position: absolute;
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: var(--gold-dim);
+  border: 0.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.7rem; font-weight: 700; color: var(--gold);
+  border-radius: 2px; text-align: center; line-height: 1.1;
+  padding: 2px;
 }
 .real-card-tag {
-  position: absolute; top: 0.8rem; left: 0.8rem;
-  font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
-  background: var(--gold); color: var(--dark); padding: 0.2rem 0.5rem; font-weight: 500;
+  font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold); font-weight: 500;
 }
 .real-card-body { padding: 1.2rem 1.4rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
 .real-card-title {
@@ -817,15 +821,128 @@ nav {
 .real-nav-count { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.06em; }
 
 /* Modal */
-.real-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.88); align-items: center; justify-content: center; }
-.real-modal.open { display: flex; }
-.real-modal-inner { background: var(--dark); border: 0.5px solid var(--border); max-width: 560px; width: 92%; padding: 2rem; position: relative; }
-.real-modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.1rem; cursor: pointer; line-height: 1; }
-.real-modal-img { height: 200px; background: var(--dark-3); margin-bottom: 1.4rem; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-.real-modal-img-label { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold); opacity: 0.1; font-weight: 700; }
-.real-modal-type { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
-.real-modal-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 1rem; line-height: 1.4; }
-.real-modal-text { font-size: 0.82rem; color: var(--text-muted); line-height: 1.8; }
+/* ─── PANNEAU LATÉRAL DROIT ─── */
+
+/* Overlay sombre derrière le panneau */
+.real-modal {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0);
+  transition: background 0.35s ease;
+}
+.real-modal.open {
+  display: block;
+  background: rgba(0,0,0,0.6);
+}
+
+/* Le panneau lui-même */
+.real-modal-inner {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: 480px; max-width: 100vw;
+  background: var(--dark);
+  border-left: 0.5px solid var(--border);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+.real-modal.open .real-modal-inner {
+  transform: translateX(0);
+}
+
+/* Bouton fermer */
+.real-modal-close {
+  position: absolute; top: 1rem; left: 1rem; z-index: 10;
+  background: var(--dark-3); border: 0.5px solid var(--border);
+  color: var(--text-muted); font-size: 0.85rem; cursor: pointer;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.15s, border-color 0.15s;
+}
+.real-modal-close:hover { color: var(--gold); border-color: var(--gold); }
+
+/* Header monogramme */
+.real-modal-header {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.6rem 1.6rem 1.2rem;
+  border-bottom: 0.5px solid var(--border);
+  padding-left: 3.2rem;
+}
+.real-modal-monogram {
+  width: 42px; height: 42px; flex-shrink: 0;
+  background: var(--gold-dim);
+  border: 0.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 13px; font-weight: 700; color: var(--gold);
+  border-radius: 2px;
+}
+.real-modal-header-meta { flex: 1; min-width: 0; }
+
+/* Corps scrollable */
+.real-modal-body {
+  flex: 1; overflow-y: auto;
+  padding: 1.4rem 1.6rem 3rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.real-modal-body::-webkit-scrollbar { width: 4px; }
+.real-modal-body::-webkit-scrollbar-thumb { background: var(--border); }
+
+.real-modal-type {
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.4rem;
+}
+.real-modal-title {
+  font-family: 'Playfair Display', serif; font-size: 1.15rem;
+  color: var(--text); line-height: 1.35; margin: 0;
+}
+.real-modal-text {
+  font-size: 0.84rem; color: var(--text-muted); line-height: 1.9;
+  margin-bottom: 2rem; white-space: pre-line;
+}
+
+/* Section ressources */
+.real-modal-resources {
+  border-top: 0.5px solid var(--border); padding-top: 1.4rem;
+}
+.real-modal-resources-title {
+  font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 0.9rem;
+}
+.real-modal-links { display: flex; flex-direction: column; gap: 0.5rem; }
+.real-modal-link {
+  display: flex; align-items: center; gap: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border: 0.5px solid var(--border);
+  background: var(--dark-2);
+  text-decoration: none; color: var(--text);
+  transition: border-color 0.15s, background 0.15s;
+}
+.real-modal-link:hover { border-color: var(--gold); background: var(--dark-3); }
+.real-modal-link-icon {
+  width: 30px; height: 30px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+}
+.real-modal-link-icon.pdf  { background: rgba(220,50,50,0.12); color: #e05555; }
+.real-modal-link-icon.yt   { background: rgba(255,0,0,0.1);   color: #ff4444; }
+.real-modal-link-icon.link { background: var(--gold-dim);      color: var(--gold); }
+.real-modal-link-info { flex: 1; min-width: 0; }
+.real-modal-link-name {
+  font-size: 0.8rem; font-weight: 500; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.real-modal-link-meta {
+  font-size: 0.66rem; color: var(--text-muted); margin-top: 0.12rem;
+}
+.real-modal-link-arrow { color: var(--gold); font-size: 0.75rem; flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .real-modal-inner { width: 100vw; }
+  .real-modal-title { font-size: 1rem; }
+  .real-modal-header { padding: 1.2rem 1rem 1rem; padding-left: 2.8rem; }
+  .real-modal-body { padding: 1.2rem 1rem 2.5rem; }
+}
 
 @media (max-width: 800px) {
   #realisations { padding: 2.5rem 1.5rem; }
@@ -1046,6 +1163,7 @@ nav {
   <a href="#" class="nav-logo" style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);text-decoration:none;letter-spacing:0.04em;">Human Face</a>
   <div class="nav-links" id="nav-links">
     <a href="#projets">Nos projets</a>
+    <a href="#réalisations">Nos réalisations</a>
     <a href="#contact">Contact</a>
     <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="nav-don">Faire un don →</a>
   </div>
@@ -1057,6 +1175,7 @@ nav {
 <!-- Drawer plein écran mobile -->
 <div class="nav-drawer" id="nav-drawer">
   <a href="#projets" onclick="navClose()">Nos projets</a>
+  <a href="#réalisations" onclick="navClose()">Nos réalisations</a>
   <a href="#contact" onclick="navClose()">Contact</a>
   <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="nav-drawer-don" onclick="navClose()">Faire un don →</a>
 </div>
@@ -1067,10 +1186,10 @@ nav {
 
   <div class="hero-left">
     <h1 class="hero-title fu d1">
-      Une autre voix<br>sur <em>Israël</em>,<br>ancrée dans les faits.
+      Une influence ultra-moderne pour défendre <em>la civilisation</em>,<br> dans les faits.
     </h1>
     <p class="hero-sub fu d2">
-      Think tank reconnu des cabinets ministériels, Human Face produit de la recherche sociologique et des actions concrètes pour structurer le narratif.
+      Think tank reconnu des cabinets ministériels, Human Face produit de la recherche sociologique et des actions concrètes pour restructurer le narratif.
     </p>
     <div class="hero-ctas fu d3">
       <a href="#projets" class="btn btn-primary">Voir nos projets</a>
@@ -1081,7 +1200,7 @@ nav {
     <p class="hero-don-label">Levée de fonds 2026</p>
     <h2 class="hero-don-title">Votre don a la capacité de changer le débat public.</h2>
     <p class="hero-don-sub">
-      Réaliser des projets nécessite de les financer. La guerre de communication nous concerne tous.<br> 
+      Prendre part à la guerre de communication nécessite de se concerner.<br> 
     </p>
     <div class="prog-hero">
       <div class="prog-hero-top">
@@ -1175,11 +1294,11 @@ nav {
 
 <!-- ─── 4 PROJETS PHARE ─── -->
 <section id="projets">
-  <p class="section-label">Ce que personne d'autre ne finance</p>
+  <p class="section-label">Impacter avec efficacité</p>
   <h2 class="section-title">Nos projets phares 2026/2027</h2>
   <p class="section-intro">
-    Notre lutte contre l'antisémitisme est fondée sur une optimisation de l'impact social. 
   </p>
+  Le think tank est fondé sur l'optimisation du rapport coût / impact social.
 
   <!-- PHOTOS CARRÉES -->
   <div class="projet-photos">
@@ -1243,49 +1362,52 @@ nav {
 
     <!-- Solution 1 -->
     <div class="projet-solution" id="solution-1">
-      <span class="solution-hook">On a produit →</span>
-      <p class="solution-title">Documentaire filmé en Israel</p>
+      <span class="solution-hook">On a initié →</span>
+      <p class="solution-title">Documentaire sociologique et interview des arabes non-israéliens vivant en Israel</p>
       <p class="solution-produced">
-       <strong>Et maintenant ? </strong> Diffuser par le biais de conférences le documentaire de 30 min et les interviews d'arabes d'Israel. <strong>Déconstruction sociologique de l'apartheid</strong>
+       Interviews traduites, mise en perspective de la réalité de la vie en Israel et comparaison avec la grille de lecture de l'apartheid.
       </p>
-      <span class="solution-goal">🎯 Financement 30k€ : conférences en binôme israélien & arabe. Diffusion et débats </span>
+      <span class="solution-hook">On a besoin de financer →</span>
+      <span class="solution-goal">🎯 30k€ pour 30 conférences de 1h30 en lycées français. Binôme israélien & arabe. </span>
       <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="solution-btn-share">
-        Je participe! →
+        Je le finance! →
       </a>
       <button class="solution-btn-all" onclick="toggleHook('hook-1', this)">
-        Détails de l'action
+        Plus de détails
       </button>
     </div>
 
     <!-- Solution 2 -->
     <div class="projet-solution" id="solution-2">
-      <span class="solution-hook">On a produit →</span>
-      <p class="solution-title">Liens tissés avec la FFF &amp; LFP</p>
+      <span class="solution-hook">On a initié →</span>
+      <p class="solution-title">Une prise de conscience de la FFF &amp; LFP au sujet du problème de l'antisémitisme</p>
       <p class="solution-produced">
-        <strong>Et maintenant ?</strong> Lancement d'une campagne de lutte contre l'antisémitisme des instances du <strong>football français.</strong> Partenariat et projet en cours avec la FFF.
+      Rapports et productions d'analyses sociologiques à destination des instances du Football Français sur la nécessité d'un positionnement sur l'antisémitisme.
       </p>
-      <span class="solution-goal">🎯 Financement 80k€: opération de communication, lutte contre l'antisémitisme.</span>
+      <span class="solution-hook">On a besoin de financer →</span>
+      <span class="solution-goal">🎯 80k€ pour une campagne de communication sur l'antisémitisme via la FFF. </span>
       <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="solution-btn-share">
-        Je participe! →
+        Je le finance! →
       </a>
       <button class="solution-btn-all" onclick="toggleHook('hook-2', this)">
-        Détails de l'action
+        Plus de détails
       </button>
     </div>
 
     <!-- Solution 3 -->
     <div class="projet-solution" id="solution-3">
-      <span class="solution-hook">On a produit →</span>
-      <p class="solution-title">Observatoire de sciences humaines</p>
+      <span class="solution-hook">On a initié →</span>
+      <p class="solution-title">OECJ - Observatoire des Enjeux Civilisationnels de Jérusalem</p>
       <p class="solution-produced">
-        <strong>Et maintenant ?</strong> Construction de panels de sociologie. Etudes déjà reprises par <strong>CNEWS, LE FIGARO via le CRIF</strong>.
+      Production d'études sociologiques quantitatives stratégiques pour influer l'espace politique et médiatique.
       </p>
-      <span class="solution-goal">🎯 Financement 120k€: plateforme, panels et analyses pluri-disciplinaires.</span>
+      <span class="solution-hook">On a besoin de financer →</span>
+      <span class="solution-goal">🎯 120k€ pour une plateforme incluant panels, études et analyses pluridisciplinaires.</span>
       <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="solution-btn-share">
-        Je participe! →
+        Je le finance! →
       </a>
       <button class="solution-btn-all" onclick="toggleHook('hook-3', this)">
-        Détails de l'action
+        Plus de détails
       </button>
     </div>
 
@@ -1294,14 +1416,15 @@ nav {
       <span class="solution-hook">On a pour projet →</span>
       <p class="solution-title">Festival de Métal en Israel</p>
       <p class="solution-produced">
-        Produire un évènement international pour<strong> réunir en Israel</strong>et réconcilier.
+        Produire un évènement international, jeune et réunir en Israel des groupes de tous horizons pour lutter contre l'antisionisme.
       </p>
-      <span class="solution-goal">🎯 Financement 170k€: festival international en collaboration avec les ministères israéliens.</span>
+      <span class="solution-hook">On a besoin de financer →</span>
+      <span class="solution-goal">🎯 Festival international. Collaboration acquise des diplomaties et ministères israéliens.</span>
       <a href="https://www.helloasso.com/associations/human-face/formulaires/1" target="_blank" class="solution-btn-share">
-        Je participe! →
+        Je le finance! →
       </a>
       <button class="solution-btn-all" onclick="toggleHook('hook-4', this)">
-        Détails de l'action
+        Plus de détails
       </button>
     </div>
 
@@ -1384,7 +1507,7 @@ nav {
     <div class="real-cards" id="real-cards">
 
       <div class="real-card" data-cat="etudes" onclick="openReal(0)">
-        <div class="real-card-img">
+        <div class="real-card-header">
           <div class="real-card-img-label">FFF</div>
           <span class="real-card-tag">Rapports administratifs</span>
         </div>
@@ -1399,8 +1522,8 @@ nav {
       </div>
 
       <div class="real-card" data-cat="etude" onclick="openReal(2)">
-        <div class="real-card-img">
-          <div class="real-card-img-label">F. Magellan</div>
+        <div class="real-card-header">
+          <div class="real-card-img-label">F. Magel</div>
           <span class="real-card-tag">Portée nationale</span>
         </div>
         <div class="real-card-body">
@@ -1414,7 +1537,7 @@ nav {
       </div>
 
       <div class="real-card" data-cat="politique" onclick="openReal(1)">
-        <div class="real-card-img">
+        <div class="real-card-header">
           <div class="real-card-img-label">A.Chikli</div>
           <span class="real-card-tag">Portée internationale</span>
         </div>
@@ -1429,7 +1552,7 @@ nav {
       </div>
 
             <div class="real-card" data-cat="etude" onclick="openReal(1)">
-        <div class="real-card-img">
+        <div class="real-card-header">
           <div class="real-card-img-label">OECJ</div>
           <span class="real-card-tag">Portée nationale</span>
         </div>
@@ -1444,8 +1567,8 @@ nav {
       </div>
 
             <div class="real-card" data-cat="etude" onclick="openReal(2)">
-        <div class="real-card-img">
-          <div class="real-card-img-label">Institutions du Football Français</div>
+        <div class="real-card-header">
+          <div class="real-card-img-label">Institut</div>
           <span class="real-card-tag">Politique</span>
         </div>
         <div class="real-card-body">
@@ -1460,7 +1583,7 @@ nav {
 
 
       <div class="real-card" data-cat="media" onclick="openReal(2)">
-        <div class="real-card-img">
+        <div class="real-card-header">
           <div class="real-card-img-label">i24 News</div>
           <span class="real-card-tag">TV</span>
         </div>
@@ -1475,7 +1598,7 @@ nav {
       </div>
 
  <div class="real-card" data-cat="media" onclick="openReal(4)">
-        <div class="real-card-img">
+        <div class="real-card-header">
           <div class="real-card-img-label">Débats</div>
           <span class="real-card-tag">Youtube</span>
         </div>
@@ -1490,7 +1613,7 @@ nav {
       </div>
 
       <div class="real-card" data-cat="media" onclick="openReal(3)">
-        <div class="real-card-img">
+        <div class="real-card-header">
           <div class="real-card-img-label">CNews</div>
           <span class="real-card-tag">TV</span>
         </div>
@@ -1505,8 +1628,8 @@ nav {
       </div>
 
       <div class="real-card" data-cat="etudes" onclick="openReal(3)">
-        <div class="real-card-img">
-          <div class="real-card-img-label">Human Face</div>
+        <div class="real-card-header">
+          <div class="real-card-img-label">Human Fa</div>
           <span class="real-card-tag">Production Youtube</span>
         </div>
         <div class="real-card-body">
@@ -1520,7 +1643,7 @@ nav {
       </div>
 
       <div class="real-card" data-cat="media" onclick="openReal(4)">
-        <div class="real-card-img">
+        <div class="real-card-header">
           <div class="real-card-img-label">LinkedIn</div>
           <span class="real-card-tag">500 000 comptes touchés</span>
         </div>
@@ -1535,7 +1658,7 @@ nav {
       </div>
 
       <div class="real-card" data-cat="politique" onclick="openReal(5)">
-        <div class="real-card-img">
+        <div class="real-card-header">
           <div class="real-card-img-label">A. Bergé</div>
           <span class="real-card-tag">Ancrage institutionnel</span>
         </div>
@@ -1559,16 +1682,31 @@ nav {
   </div>
 </section>
 
-<!-- Modal réalisation -->
+<!-- Modal réalisation pleine page -->
 <div class="real-modal" id="real-modal" onclick="closeReal()">
   <div class="real-modal-inner" onclick="event.stopPropagation()">
     <button class="real-modal-close" onclick="closeReal()">✕</button>
-    <div class="real-modal-img">
-      <div class="real-modal-img-label" id="real-modal-img-label"></div>
+
+    <!-- Header : monogramme + type + titre -->
+    <div class="real-modal-header">
+      <div class="real-modal-monogram" id="real-modal-img-label"></div>
+      <div class="real-modal-header-meta">
+        <p class="real-modal-type" id="real-modal-type"></p>
+        <p class="real-modal-title" id="real-modal-title"></p>
+      </div>
     </div>
-    <p class="real-modal-type" id="real-modal-type"></p>
-    <p class="real-modal-title" id="real-modal-title"></p>
-    <p class="real-modal-text" id="real-modal-text"></p>
+
+    <!-- Corps scrollable -->
+    <div class="real-modal-body">
+      <p class="real-modal-text" id="real-modal-text"></p>
+
+      <!-- Section ressources (PDF, YouTube, liens) -->
+      <div class="real-modal-resources" id="real-modal-resources" style="display:none;">
+        <p class="real-modal-resources-title">Documents &amp; liens</p>
+        <div class="real-modal-links" id="real-modal-links"></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1955,13 +2093,64 @@ nav {
     });
   });
   // ─── CE QUE NOUS AVONS FAIT ───
+  // Types de liens disponibles : 'pdf', 'yt', 'link'
+  // Pour chaque ressource : { type, label, meta, url }
+  // Pour l'image popup : img: 'chemin/vers/image.jpg' (laisser vide = fond sombre avec label)
   const realData = [
-    { type: 'Lobbying', label: 'FFF', title: 'Avoir alerté les autorités sur le mutisme du Football Français', text: 'Human Face a été reçu en cabinet ministériel afin de coordonner une action de communication à la faveur des otages israéliens.' },
-    { type: 'Presse nationale', label: 'Figaro', title: 'Analyse publiée dans Le Figaro', text: 'Décryptage des enjeux identitaires contemporains publié dans Le Figaro. L\'article a positionné Human Face comme référence analytique dans le débat public français.' },
-    { type: 'Interventions', label: 'i24', title: 'Interview i24 News — La voix française sur Israël', text: 'Human Face présente ses données originales sur la perception d\'Israël dans les médias français. Une présence régulière dans les médias israéliens de référence.' },
-    { type: 'Collaborations', label: 'CNews', title: 'Intervention sur CNews', text: 'Analyse du traitement médiatique des conflits identitaires en France, présentée en direct sur CNews. Nos chercheurs y décryptent les biais et les narratifs dominants.' },
-    { type: 'Réseaux', label: '500k', title: 'Campagne d\'influence — 500 000 comptes touchés', text: 'CTR de 10,4%, soit 10× la moyenne sectorielle. Diffusion auprès de décideurs, journalistes et personnalités politiques françaises et internationales. Une campagne unique par son efficacité.' },
-    { type: 'Institutionnel', label: 'Min.', title: 'Collaboration avec les Ministères', text: 'Nos travaux ont été intégrés dans les réflexions des cabinets du Ministère chargé des Discriminations et du Ministère chargé de la Diaspora. Une reconnaissance de la qualité de nos analyses.' },
+    {
+      type: 'Événement', label: 'FFF',
+      title: 'Avoir alerté les autorités sur le mutisme du Football Français',
+      text: 'Human Face a été reçu en cabinet ministériel afin de coordonner une action de communication à la faveur des otages israéliens.\n\nNous avons produit plusieurs rapports d\'enquête sociologique sur le comportement des instances du football français face aux otages. Ces travaux ont été remis aux décisionnaires politiques et sportifs.',
+      links: [
+        { type: 'pdf', label: 'Rapport d\'enquête — Football & otages', meta: 'PDF · 24 pages', url: '#' },
+        { type: 'pdf', label: 'Note de synthèse pour cabinet ministériel', meta: 'PDF · 8 pages', url: '#' },
+        { type: 'link', label: 'Article de presse sur l\'action', meta: 'Le Monde · Janvier 2024', url: '#' },
+      ]
+    },
+    {
+      type: 'Presse nationale', label: 'Figaro',
+      title: 'Analyse publiée dans Le Figaro',
+      text: 'Décryptage des enjeux identitaires contemporains publié dans Le Figaro. L\'article a positionné Human Face comme référence analytique dans le débat public français.',
+      links: [
+        { type: 'link', label: 'Lire l\'article sur Le Figaro', meta: 'Le Figaro · 2024', url: '#' },
+      ]
+    },
+    {
+      type: 'Télévision internationale', label: 'i24',
+      title: 'Interview i24 News — La voix française sur Israël',
+      text: 'Human Face présente ses données originales sur la perception d\'Israël dans les médias français. Une présence régulière dans les médias israéliens de référence.',
+      links: [
+        { type: 'yt', label: 'Interview complète sur i24 News', meta: 'YouTube · 18 min', url: '#' },
+        { type: 'yt', label: 'Deuxième passage — Analyse des médias', meta: 'YouTube · 12 min', url: '#' },
+      ]
+    },
+    {
+      type: 'Télévision nationale', label: 'CNews',
+      title: 'Intervention sur CNews',
+      text: 'Analyse du traitement médiatique des conflits identitaires en France, présentée en direct sur CNews. Nos chercheurs y décryptent les biais et les narratifs dominants.',
+      links: [
+        { type: 'yt', label: 'Replay — Intervention CNews', meta: 'YouTube · 8 min', url: '#' },
+      ]
+    },
+    {
+      type: 'Étude LinkedIn', label: '500k',
+      title: 'Campagne d\'influence — 500 000 comptes touchés',
+      text: 'CTR de 10,4%, soit 10× la moyenne sectorielle. Diffusion auprès de décideurs, journalistes et personnalités politiques françaises et internationales. Une campagne unique par son efficacité.',
+      links: [
+        { type: 'pdf', label: 'Rapport de performance LinkedIn 2024', meta: 'PDF · 12 pages', url: '#' },
+        { type: 'pdf', label: 'Rapport de performance LinkedIn 2025', meta: 'PDF · 15 pages', url: '#' },
+      ]
+    },
+    {
+      type: 'Institutionnel', label: 'Min.',
+      title: 'Collaboration avec les Ministères',
+      text: 'Nos travaux ont été intégrés dans les réflexions des cabinets du Ministère chargé des Discriminations et du Ministère chargé de la Diaspora. Une reconnaissance de la qualité de nos analyses.',
+      links: [
+        { type: 'pdf', label: 'Note remise au Ministère des Discriminations', meta: 'PDF · 10 pages', url: '#' },
+        { type: 'pdf', label: 'Note remise au Ministère de la Diaspora', meta: 'PDF · 8 pages', url: '#' },
+        { type: 'link', label: 'Assises de lutte contre l\'antisémitisme', meta: 'Paris · 2025', url: '#' },
+      ]
+    },
   ];
 
   let realIdx = 0;
@@ -2006,14 +2195,49 @@ nav {
 
   function openReal(idx) {
     const r = realData[idx];
+
+    // Monogramme
     document.getElementById('real-modal-img-label').textContent = r.label;
+
+    // Texte
     document.getElementById('real-modal-type').textContent = r.type;
     document.getElementById('real-modal-title').textContent = r.title;
     document.getElementById('real-modal-text').textContent = r.text;
-    document.getElementById('real-modal').classList.add('open');
+
+    // Ressources (PDF, YouTube, liens)
+    const resSection = document.getElementById('real-modal-resources');
+    const linksContainer = document.getElementById('real-modal-links');
+    if (r.links && r.links.length) {
+      const icons = { pdf: '📄', yt: '▶', link: '↗' };
+      const labels = { pdf: 'PDF', yt: 'YouTube', link: 'Lien' };
+      linksContainer.innerHTML = r.links.map(l => `
+        <a class="real-modal-link" href="${l.url}" target="_blank" rel="noopener">
+          <span class="real-modal-link-icon ${l.type}">${icons[l.type] || '↗'}</span>
+          <span class="real-modal-link-info">
+            <span class="real-modal-link-name">${l.label}</span>
+            <span class="real-modal-link-meta">${labels[l.type] || ''} · ${l.meta}</span>
+          </span>
+          <span class="real-modal-link-arrow">↗</span>
+        </a>
+      `).join('');
+      resSection.style.display = '';
+    } else {
+      resSection.style.display = 'none';
+    }
+
+    // Ouvrir avec transition
+    const modal = document.getElementById('real-modal');
+    modal.style.display = 'block';
+    requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('open')));
+    document.body.style.overflow = 'hidden';
   }
   function closeReal() {
-    document.getElementById('real-modal').classList.remove('open');
+    const modal = document.getElementById('real-modal');
+    modal.classList.remove('open');
+    modal.addEventListener('transitionend', () => {
+      if (!modal.classList.contains('open')) modal.style.display = '';
+    }, { once: true });
+    document.body.style.overflow = '';
   }
 
   // Init
